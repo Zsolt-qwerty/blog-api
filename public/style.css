@@ -1,0 +1,62 @@
+body {
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: rgb(47, 79, 79);
+    background-color: rgb(245, 245, 220);
+    /* display: flex; */
+    /* flex-flow: column nowrap; */
+    /* align-items: center; */
+}
+
+/* for testing div positions
+*/
+p,
+div {
+    border: 1px dotted red;
+}
+
+a,
+a:active,
+a:link,
+a:visited {
+    font-family: cursive;
+    text-decoration: none;
+    color: rgb(47, 79, 79);
+}
+
+#menubar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 5px;
+    padding: 5px;
+    width: min-content;
+    background-color: rgb(219, 197, 163);
+    border-radius: 6px;
+}
+
+button {
+    cursor: pointer;
+    background-color: darkslategrey;
+    color: bisque;
+    letter-spacing: 2px;
+    text-wrap: nowrap;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 6px;
+    box-shadow: 0 3px 5px 0 rgb(132, 158, 173);
+}
+
+button:hover {
+    filter: brightness(90%);    
+}
+
+button:active {
+    filter: brightness(90%);    
+    transform: translateY(2px);
+    box-shadow: 0 1px 5px 0 rgb(110, 139, 146);
+}

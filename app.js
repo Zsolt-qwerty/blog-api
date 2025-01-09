@@ -1,54 +1,19 @@
 import express from "express";
+import morgan from "morgan";
+
+import blogRouter from "./routes/routes.js";
+
 const app = express();
-const PORT = 3000;
 
-import {
-  getBlogs,
-  getBlogByID,
-  addBlog,
-  editBlog,
-  deleteBlog,
-} from "./blog.js";
-
+app.use(morgan("dev"));
+app.use(express.static("public"));
 app.use(express.json());
 
-app.get("/", function (req, res) {
-  res.send("Welcome to the blog API");
+app.use("/api/blogs", blogRouter);
+
+// GET /blogs
+app.use("/blogs", function (req, res) {
+    res.send('Welcome to the blog API! Please use "./api/blogs/" path!');
 });
 
-app.get("/blogs", async function (req, res) {
-  const blogs = await getBlogs();
-  res.json(blogs);
-});
-
-app.get("/blogs/:id", async function (req, res) {
-  const { id } = req.params;
-  const blog = await getBlogByID(+id);
-  if (!blog) {
-    res.status(404).send("Quote not found");
-  }
-  res.json(blog);
-});
-
-app.post("/blogs", async function (req, res) {
-  const { date, text } = req.body;
-  const blog = await addBlog(date, text);
-  res.status(201).json(blog);
-});
-
-app.patch("/blogs/:id", async function (req, res) {
-  const { id } = req.params;
-  const { text } = req.body;
-  const blog = await editBlog(+id, text);
-  res.json(blog);
-});
-
-app.delete("/blogs/:id", async function (req, res) {
-  const { id } = req.params;
-  const blog = await deleteBlog(+id);
-  res.json(blog);
-});
-
-app.listen(PORT, function () {
-  console.log(`Server is now listening on http://localhost:${PORT}`);
-});
+export default app;
