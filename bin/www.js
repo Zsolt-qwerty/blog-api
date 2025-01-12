@@ -1,8 +1,7 @@
 import app from "../app.js";
 
-const PORT = 3000;
-// const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`);
+  console.log(`"blog-api" listening on http://localhost:${PORT}`);
 });
