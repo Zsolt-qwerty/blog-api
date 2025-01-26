@@ -1,3 +1,4 @@
+// Local file source
 import { promises as fs } from "node:fs";
 
 import { FILEPATH } from "../config/config.js";

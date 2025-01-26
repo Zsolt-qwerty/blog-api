@@ -1,5 +1,6 @@
+// Local file source
 import { v4 as uuidv4 } from "uuid";
-import { readBlogs, writeBlogs } from "../models/blog.js";
+import { readBlogs, writeBlogs } from "../models/local.models.js";
 
 // Get all blogs
 export async function getBlogs() {

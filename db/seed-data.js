@@ -1,8 +1,8 @@
-[
+export const seedData = [
   {
     "id": 1,
     "date": "2024-11-25",
-    "text": "!!! LOCAL !!! - This is my very first entry and can't wait to tell you all about me!\nPlease follow for my daily adventures!"
+    "text": "This is my very first entry and can't wait to tell you all about me!\nPlease follow for my daily adventures!"
   },
   {
     "id": 2,

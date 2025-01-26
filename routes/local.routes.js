@@ -1,3 +1,4 @@
+// Local file routes
 import express from "express";
 
 import {
@@ -6,7 +7,7 @@ import {
   createBlog,
   updateBlogByID,
   deleteBlogByID,
-} from "../controllers/controllers.js";
+} from "../controllers/local.controllers.js";
 
 const router = express.Router();
 
@@ -14,7 +15,10 @@ const router = express.Router();
 router.get("/", async function (req, res) {
   try {
     const blogs = await getBlogs();
-    res.status(200).json(blogs);
+    res.status(200).json({
+      success: true,
+      payload: blogs,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -26,9 +30,15 @@ router.get("/:id", async function (req, res) {
     const { id } = req.params;
     const blog = await getBlogByID(+id);
     if (!blog) {
-      res.status(404).send("Quote not found");
+      res.status(404).send({
+        success: false,
+        reason: `No blog with id ${id} found`,
+      });
     }
-    res.status(200).json(blog);
+    res.status(200).json({
+      success: true,
+      payload: blog,
+    });
   } catch (error) {
     if (error.message.includes("not found")) {
       res.status(404).json({ message: error.message });
@@ -43,9 +53,12 @@ router.post("/", async function (req, res) {
   try {
     const { date, text } = req.body;
     const blog = await createBlog(date, text);
-    res.status(201).json(blog);
+    res.status(201).json({
+      success: true,
+      payload: blog,
+    });
   } catch (error) {
-    if (error.message === "Invalid recipe data.") {
+    if (error.message === "Invalid blog data.") {
       res.status(400).json({ message: error.message });
     } else {
       res.status(500).json({ message: error.message });
@@ -59,7 +72,10 @@ router.patch("/:id", async function (req, res) {
     const { id } = req.params;
     const { date, text } = req.body;
     const blog = await updateBlogByID(+id, date, text);
-    res.status(200).json(blog);
+    res.status(200).json({
+      success: true,
+      payload: blog,
+    });
   } catch (error) {
     if (error.message.includes("not found")) {
       res.status(404).json({ message: error.message });
@@ -74,7 +90,10 @@ router.delete("/:id", async function (req, res) {
   try {
     const { id } = req.params;
     const deletedBlog = await deleteBlogByID(+id);
-    res.status(200).json(deletedBlog);
+    res.status(200).json({
+      success: true,
+      payload: deletedBlog,
+    });
   } catch (error) {
     if (error.message.includes("not found")) {
       res.status(404).json({ message: error.message });

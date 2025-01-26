@@ -4,9 +4,11 @@
   "main": "script.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "dev": "node --env-file-if-exists .env --watch bin/www.js",
-    "test": "vitest"
+    "start": "node --env-file .env bin/www.js",
+    "dev": "node --env-file .env --watch bin/www.js",
+    "reset-db": "node --env-file .env db/scripts/reset-database.js",
+    "test": "vitest",
+    "coverage": "vitest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -15,9 +17,11 @@
   "dependencies": {
     "express": "^4.21.2",
     "morgan": "^1.10.0",
+    "pg": "^8.13.1",
     "uuid": "^11.0.4"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.8",
     "supertest": "^7.0.0",
     "vitest": "^2.1.8"
   }
