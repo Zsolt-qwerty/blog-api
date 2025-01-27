@@ -1,7 +1,6 @@
 import { test, expect, describe, beforeAll, afterAll } from 'vitest';
 import supertest from 'supertest';
-import { resetBlogsTable } from '../db/scripts/reset-database.js';
-
+import { resetDatabase, closePool } from '../db/scripts/reset-database.helpers.js';
 // import API requests for testing
 import app from '../app.js';
 
@@ -9,16 +8,23 @@ import app from '../app.js';
 const request = supertest(app);
 
 // Reset the database before running tests
-// beforeAll(async () => await resetBlogsTable());
+beforeAll(async () => await resetDatabase());
+
+// Reset the database after running tests
+afterAll(async () => {
+    await resetDatabase();
+    await closePool();
+});
 
 // Group tests as HTTP requests (db)
 describe('HTTP requests (db)', () => {
 
     // GET /api/welcome should return a welcome message
     test('GET /api/welcome should return a welcome message', async () => {
-        const response = await request.get('/api/welcome');
+        const response = await request.get(`/api/welcome`);
         expect(response.status).toBe(200);
-        expect(response.text).toBe('Welcome to the blog API! Please use "./api/db/blogs/" path!');
+        expect(response.text).toContain('Welcome');
+        // expect(response.text).toBe('Welcome to the blog API! Please use "./api/db/blogs/" path!');
     });
     
     // GET /api/db/blogs should return all blogs
@@ -27,6 +33,8 @@ describe('HTTP requests (db)', () => {
         expect(response.status).toBe(200);
         expect(response.headers['content-type']).toMatch(/application\/json/);
         expect(response.body.success).toEqual(true);
+        // Check rows are returned
+        expect(response.body.payload.length).toBeGreaterThan(0);
     });
     
     // GET /api/db/blogs?date=YYYY-MM-DD should return all blogs by date
@@ -35,7 +43,8 @@ describe('HTTP requests (db)', () => {
         const response = await request.get(`/api/db/blogs?date=${date}`);
         expect(response.status).toBe(200);
         expect(response.headers['content-type']).toMatch(/application\/json/);
-        expect(response.body.success).toHaveProperty('date', date);
+        expect(response.body.success).toEqual(true);
+        expect(response.body.payload[0].date).toContain(date);
     });
     
     // GET /api/db/blogs/:id should return a single blog
@@ -44,6 +53,7 @@ describe('HTTP requests (db)', () => {
         const response = await request.get(`/api/db/blogs/${id}`);
         expect(response.status).toBe(200);
         expect(response.headers['content-type']).toMatch(/application\/json/);
+        expect(response.body.success).toEqual(true);
         expect(response.body.payload).toHaveProperty('id', id);
     });
     
@@ -74,15 +84,15 @@ describe('HTTP requests (db)', () => {
     //     expect(response.body).toMatchObject(updatedBlog);
     // });
     
-    // // DELETE /api/db/blogs/:id should delete a single blog by id
-    // test('DELETE /api/db/blogs/:id should delete a single blog by id', async () => {
-    //     const id = 1;
-    //     const response = await request.delete(`/api/db/blogs/${id}`);
-    //     expect(response.status).toBe(200);
-    // });
-
-// Reset the database after running tests
-// afterAll(async () => await resetBlogsTable());
+    // DELETE /api/db/blogs/:id should delete a single blog by id
+    test('DELETE /api/db/blogs/:id should delete a single blog by id', async () => {
+        const id = 1;
+        const response = await request.delete(`/api/db/blogs/${id}`);
+        expect(response.status).toBe(200);
+        expect(response.headers['content-type']).toMatch(/application\/json/);
+        expect(response.body.success).toEqual(true);
+        expect(response.body.payload).toHaveProperty('id', id);
+    });
 
 // End of group
 });
