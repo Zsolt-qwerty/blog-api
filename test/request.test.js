@@ -57,32 +57,32 @@ describe('HTTP requests (db)', () => {
         expect(response.body.payload).toHaveProperty('id', id);
     });
     
-    // // POST /api/db/blogs should create a new blog
-    // test('POST /api/db/blogs should create a new blog', async () => {
-    //     const newBlog = {
-    //         date: "2025-01-10",
-    //         text: "I hope this works!",
-    //     };
-    //     const response = await request.post('/api/db/blogs').send(newBlog);
-    //     expect(response.status).toBe(201);
-    //     expect(response.headers['content-type']).toMatch(/application\/json/);
-    //     expect(response.body).toHaveProperty('id');
-    //     expect(response.body).toMatchObject(newBlog);
-    // });
+    // POST /api/db/blogs should create a new blog
+    test('POST /api/db/blogs should create a new blog', async () => {
+        const newBlog = {
+            date: "2025-01-10T00:00:00.000Z",
+            text: "I hope this works!",
+        };
+        const response = await request.post('/api/db/blogs').send(newBlog);
+        expect(response.status).toBe(201);
+        expect(response.headers['content-type']).toMatch(/application\/json/);
+        expect(response.body.payload).toHaveProperty('id');
+        expect(response.body.payload).toMatchObject(newBlog); // look into matching short/long date issue
+    });
     
-    // // PATCH /api/db/blogs/:id should update a single blog by id
-    // test('PATCH /api/db/blogs/:id should update a single blog by id', async () => {
-    //     const id = 1;
-    //     const updatedBlog = {
-    //         date: "05/01/2025",
-    //         text: "I hope this works!",
-    //     };
-    //     const response = await request.patch(`/api/db/blogs/${id}`).send(updatedBlog);
-    //     expect(response.status).toBe(200);
-    //     expect(response.headers['content-type']).toMatch(/application\/json/);
-    //     expect(response.body).toHaveProperty('id', id);
-    //     expect(response.body).toMatchObject(updatedBlog);
-    // });
+    // PATCH /api/db/blogs/:id should update a single blog by id
+    test('PATCH /api/db/blogs/:id should update a single blog by id', async () => {
+        const id = 1;
+        const updatedBlog = {
+            date: "2025-01-10T00:00:00.000Z",
+            text: "I hope this works!",
+        };
+        const response = await request.patch(`/api/db/blogs/${id}`).send(updatedBlog);
+        expect(response.status).toBe(200);
+        expect(response.headers['content-type']).toMatch(/application\/json/);
+        expect(response.body.payload).toHaveProperty('id', id);
+        expect(response.body.payload).toMatchObject(updatedBlog); // look into matching short/long date issue
+    });
     
     // DELETE /api/db/blogs/:id should delete a single blog by id
     test('DELETE /api/db/blogs/:id should delete a single blog by id', async () => {
