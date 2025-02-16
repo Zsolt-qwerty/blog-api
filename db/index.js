@@ -2,8 +2,7 @@
 import pg from 'pg';
 
 // Retrieve the database connection string from environment variables
-const connectionString = process.env.DB_URL ||
-    'postgresql://blog_o39e_user:6FNAKJtVEv5uI5hfj9kI08f4nit3pXMH@dpg-cup2m43qf0us7397c3ag-a.oregon-postgres.render.com/blog_o39e';
+const connectionString = process.env.DB_URL;
 
 // Check if connection string is defined
 if (!connectionString) {
