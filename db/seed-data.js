@@ -16,16 +16,21 @@ export const seedData = [
   },
   {
     "id": 4,
+    "date": "2024-11-27",
+    "text": "This is my second entry today, I'm on a roll!\nI hope you're enjoying my daily adventures as much as I am!"
+  },
+  {
+    "id": 5,
     "date": "2025-01-05",
     "text": "I hope this works!"
   },
   {
-    "id": 5,
+    "id": 6,
     "date": "2025-01-08",
     "text": "Today was a hard day!"
   },
   {
-    "id": 6,
+    "id": 7,
     "date": "2025-01-09",
     "text": "empty"
   }
