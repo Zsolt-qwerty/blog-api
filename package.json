@@ -7,8 +7,8 @@
     "start": "node --env-file .env bin/www.js",
     "dev": "node --env-file .env --watch bin/www.js",
     "reset-db": "node --env-file .env db/scripts/reset-database.js",
-    "test": "vitest",
-    "coverage": "vitest --coverage"
+    "test": "node --env-file=.env ./node_modules/vitest/vitest.mjs",
+    "coverage": "node --env-file=.env ./node_modules/vitest/vitest.mjs --coverage"
   },
   "keywords": [],
   "author": "",
